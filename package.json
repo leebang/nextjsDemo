@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "homepage": "https://leebang.github.io/nextjsDemo/",
   "dependencies": {
+    "gh-pages": "^2.2.0",
     "next": "^9.3.4",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
@@ -11,7 +13,9 @@
   "scripts": {
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start -p $PORT",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build",
+    "heroku-postbuild": "yarn build"
   }
-  
 }

@@ -1,10 +1,10 @@
-const isProd = (process.env.NODE_ENV || 'production') === 'production'
+// const isProd = (process.env.NODE_ENV || 'production') === 'production'
 
-module.exports = {
-  exportPathMap: () => ({
-    '/': { page: '/' },
-  }),
+// module.exports = {
+//   exportPathMap: () => ({
+//     '/': { page: '/' },
+//   }),
   
-  distDir: 'build',
-}
+//   distDir: 'build',
+// }
 

@@ -113,22 +113,33 @@ export default function Index() {
     
             setTheHex(router.query.hex)
             setTheColor("#" + router.query.hex)
+        } else if (router.query.rgb) {
+            const theRGB = (router.query.rgb).split(',')
+            setRValue(theRGB[0])
+            setGValue(theRGB[1])
+            setBValue(theRGB[2])
+
+            const result = rgbToHex(theRGB[0],theRGB[1],theRGB[2])
+            
+            setTheHex("#" + result)
+            setTheColor("#" + result)
+
         } else {
             setRValue(rValue)
             setGValue(gValue)
             setBValue(bValue)
             setTheHex(theHex)
+            setTheColor("#" + theHex)
         }
         
 
 
-    }, [router.query.hex])
+    }, [router.query.hex, router.query.rgb])
 
     return (
       
       <div style={theStyle}>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
-
         <Grid rows={3} centered >
         
         <Grid.Row style={{height:"30vh"}}></Grid.Row>
@@ -163,7 +174,7 @@ export default function Index() {
 
         <Grid.Row columns={5}  centered >
             <Grid.Column textAlign='center'>
-                <h4>Red</h4> 
+                <h4 style={{color:"red"}}>Red</h4> 
                 {/* {rValue} */}
                 {/* <br/> */}
                 <div class="ui focus input"><input 
@@ -183,7 +194,7 @@ export default function Index() {
             </Grid.Column>
 
             <Grid.Column centered textAlign='center'>
-                <h4>Green </h4> 
+                <h4 style={{color:"green"}}>Green </h4> 
                 {/* {gValue} */}
                 {/* <br/> */}
                 <div class="ui focus input"><input 
@@ -203,7 +214,7 @@ export default function Index() {
             </Grid.Column>
 
             <Grid.Column centered textAlign='center'>
-                <h4>Blue</h4> 
+                <h4 style={{color:"blue"}}>Blue</h4> 
                 {/* {bValue} */}
                 {/* <br/> */}
                 <div class="ui focus input"><input 

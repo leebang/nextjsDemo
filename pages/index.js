@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
+import { Grid } from 'semantic-ui-react'
 
 
 var helper = function (rgb) { 
@@ -61,8 +62,14 @@ export default function Index() {
         "FFFFFF"
 
     })
-    const [theRGB, setTheRGB] = useState()
     const [theColor, setTheColor] = useState()
+
+
+    const theStyle = {
+        height: "105vh", 
+        width: "100vw",
+        background: theColor
+    }
 
     const setDefault = () => {
         setRValue("")
@@ -70,7 +77,7 @@ export default function Index() {
         setBValue("")
         setTheHex("")
 
-        setTheColor({background: "#FFFFFF"})
+        setTheColor("#FFFFFF")
         
     }
 
@@ -81,7 +88,7 @@ export default function Index() {
         setBValue(result[2])
 
         setTheHex(str)
-        setTheColor({background: "#" + str})
+        setTheColor("#"+str)
 
     }
 
@@ -93,7 +100,7 @@ export default function Index() {
         setBValue(b)
 
         setTheHex(result)
-        setTheColor({background: "#" + result})
+        setTheColor("#"+result)
 
     }
 
@@ -105,95 +112,122 @@ export default function Index() {
             setBValue(result[2])
     
             setTheHex(router.query.hex)
-            setTheColor({background: "#" + router.query.hex})
+            setTheColor("#" + router.query.hex)
         } else {
             setRValue(rValue)
             setGValue(gValue)
             setBValue(bValue)
             setTheHex(theHex)
         }
+        
 
 
     }, [router.query.hex])
 
     return (
-      <div style={theColor}>
+      
+      <div style={theStyle}>
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         {router.query.hex}
-        <p>Hello Next.js</p>
-
-        <p>Red </p> {rValue}
-        <input 
-        type="text"
-        placeholder = "Enter Red value"
-        value = {rValue}
-        maxLength = "3"
-        onChange = {(e) => {
-            if (e.target.value) {
-                setHEX(e.target.value, gValue, bValue)
-            } else {
-                setDefault()
-            }
-        }
-        }
-        />
-
-        <p>Green </p> {gValue}
-        <input 
-        type="text"
-        placeholder = "Enter Green value"
-        value = {gValue}
-        maxLength = "3"
-        onChange = {(e) => {
-            if (e.target.value) {
-                setHEX(rValue, e.target.value, bValue)
-            } else {
-                setDefault()
-            }
-        }
-        }
-        />
-
-        <p>Blue </p> {bValue}
-        <input 
-        type="text"
-        placeholder = "Enter Blue value"
-        value = {bValue}
-        maxLength = "3"
-        onChange = {(e) => {
-            if (e.target.value) {
-                setHEX(rValue, gValue, e.target.value)
-            } else {
-                setDefault()
-            }
-        }
-        }
-        />
 
 
-        <br/>
-        <br/>
-    
-        <p>Hex Value </p>{theHex}
-        <input 
-        type="text"
-        placeholder = "Enter value"
-        maxLength = "6"
-        value = {theHex}
-
-        onChange = {(e) => {
-            if (e.target.value) {
-                setRGB(e.target.value)
-            } else {
-                setDefault()
-            }
-            
-        }
-        }
-        />
+        <Grid rows={3} centered >
         
+        <Grid.Row style={{height:"30vh"}}></Grid.Row>
 
+        <Grid>
+        <Grid.Row columns={1}  width={8} centered >
+            <h2>Hex RGB Converter</h2>
+        </Grid.Row>
 
-    
+        <Grid.Row columns={1}  width={8} centered >
+        
+            <h4>Hex Value </h4>
+            {/* {theHex} */}
+            {/* <br/> */}
+            <div class="ui focus input"><input 
+            type="text"
+            placeholder = "Enter HEX value"
+            maxLength = "6"
+            value = {theHex}
+            onChange = {(e) => {
+                if (e.target.value) {
+                    setRGB(e.target.value)
+                } else {
+                    setDefault()
+                }
+                
+            }
+            }
+            />
+            </div>
+        </Grid.Row>
+
+        <Grid.Row columns={5}  centered >
+            <Grid.Column textAlign='center'>
+                <h4>Red</h4> 
+                {/* {rValue} */}
+                {/* <br/> */}
+                <div class="ui focus input"><input 
+                type="text"
+                placeholder = "Enter Red value"
+                value = {rValue}
+                maxLength = "3"
+                onChange = {(e) => {
+                    if (e.target.value) {
+                        setHEX(e.target.value, gValue, bValue)
+                    } else {
+                        setDefault()
+                    }
+                }
+                }
+                /></div>
+            </Grid.Column>
+
+            <Grid.Column centered textAlign='center'>
+                <h4>Green </h4> 
+                {/* {gValue} */}
+                {/* <br/> */}
+                <div class="ui focus input"><input 
+                type="text"
+                placeholder = "Enter Green value"
+                value = {gValue}
+                maxLength = "3"
+                onChange = {(e) => {
+                    if (e.target.value) {
+                        setHEX(rValue, e.target.value, bValue)
+                    } else {
+                        setDefault()
+                    }
+                }
+                }
+                /></div>
+            </Grid.Column>
+
+            <Grid.Column centered textAlign='center'>
+                <h4>Blue</h4> 
+                {/* {bValue} */}
+                {/* <br/> */}
+                <div class="ui focus input"><input 
+                type="text"
+                placeholder = "Enter Blue value"
+                value = {bValue}
+                maxLength = "3"
+                onChange = {(e) => {
+                    if (e.target.value) {
+                        setHEX(rValue, gValue, e.target.value)
+                    } else {
+                        setDefault()
+                    }
+                }
+                }
+                /></div>
+            </Grid.Column>
+        </Grid.Row>
+    </Grid>
+    </Grid>
+
       </div>
+      
     );
   }

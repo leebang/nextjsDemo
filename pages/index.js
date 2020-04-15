@@ -62,14 +62,14 @@ export default function Index() {
     const [rValue, setRValue] = useState(255)
     const [gValue, setGValue] = useState(255)
     const [bValue, setBValue] = useState(255)
-    const [theHex, setTheHex] = useState("FFFFFF")
+    const [theHex, setTheHex] = useState("ffffff")
     const [theColor, setTheColor] = useState()
 
 
     const theStyle = {
-        height: "105vh", 
+        height: "100vh", 
         width: "100vw",
-        background: theColor,
+        background: theColor
         
     }
 
@@ -81,7 +81,7 @@ export default function Index() {
     const inputWrapper = "ui focus input transparent"
     const inputWrapperStyle = {width: "54.5px", right:"23px", textAlign: "center", lineHeight: "1em", background:"rgb(25,25,25,0.2)"}
     const inputWrapperStyleHex = {width: "80px", textAlign: "center", lineHeight: "1em", background:"rgb(25,25,25,0.2)"}
-    const boxStyle = {background:"rgb(255,255,255,0.5)", width: "300px", boxShadow: "1px 3px 10px #111111", borderRadius: "5px"}
+    const boxStyle = {background:"rgb(255,255,255,0.5)", width: "300px", boxShadow: "1px 3px 10px #111111", borderRadius: "5px", marginLeft: "auto", marginRight: "auto"}
 
 
 
@@ -109,14 +109,8 @@ export default function Index() {
                 setBValue(result[2])
             }
         }
-
-        
-
-
         setTheHex(str)
         setTheColor("#"+str)
-        
-
 
     }
 
@@ -170,101 +164,101 @@ export default function Index() {
     return (
       <div style={theStyle}>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
-        <Grid rows={3} centered>
-        
-        <Grid.Row style={{height:"30vh"}}></Grid.Row>
 
-        <Grid style={boxStyle}>
-        <Grid.Row columns={1}  width={8} centered >
-            <h2>Hex RGB Converter</h2>
-        </Grid.Row>
-
-        <Grid.Row columns={1}  width={8} centered>
-            <h4>Hex</h4>
-            <div class={inputWrapper} style={inputWrapperStyleHex}><input
-            style={inputStyle}
-            type="text"
-            maxLength = "6"
-            value = {theHex}
-            onChange = {(e) => {
-                if (e.target.value) {
-                    if (e.target.value.length <= 6) {
-                        setRGB(e.target.value)
-                    } else {
-                        setTheHex(e.target.value)
-                    }
-                } else {
-                    setTheHex(e.target.value)
-                }
-            }
-            }
-            /></div>
             
-        </Grid.Row>
+            <Grid.Row style={{height:"30vh"}}></Grid.Row>
 
-        {/* RGB part */}
-        <Grid.Row columns={5} centered style={{left:"10px"}} >
+            <Grid style={boxStyle}>
+                <Grid.Row columns={1}  width={8} centered >
+                    <h2>Hex RGB Converter</h2>
+                </Grid.Row>
 
-            <Grid.Column>
-                <h4 style={{color:"red"}}>R</h4> 
-                {/* {rValue} */}
-                {/* <br/> */}
-                <div class={inputWrapper} style={inputWrapperStyle}><input 
-                style={inputStyle}
-                type="text"
-                value = {rValue}
-                maxLength = "3"
-                onChange = {(e) => {
-                    if (e.target.value <= 255) {
-                        e.target.value = e.target.value.replace(/^0/, "")
-                        setHEX(e.target.value, gValue, bValue)
-                    } 
-                }
-                
-                }
-                /></div>
-            </Grid.Column>
-
-            <Grid.Column>
-                <h4 style={{color:"green"} }>G</h4> 
-                {/* {gValue} */}
-                {/* <br/> */}
-                <div class={inputWrapper} style={inputWrapperStyle}><input
-                style={inputStyle}
-                type="text"
-                value = {gValue}
-                maxLength = "3"
-                onChange = {(e) => {
-                    if (e.target.value <= 255) {
-                        e.target.value = e.target.value.replace(/^0/, "")
-                        setHEX(rValue, e.target.value, bValue)
+                <Grid.Row columns={1}  width={8} centered>
+                    <h4>Hex</h4>
+                    <div class={inputWrapper} style={inputWrapperStyleHex}><input
+                    style={inputStyle}
+                    type="text"
+                    maxLength = "6"
+                    value = {theHex}
+                    onChange = {(e) => {
+                        if (e.target.value) {
+                            if (e.target.value.length <= 6) {
+                                setRGB(e.target.value)
+                            } else {
+                                setTheHex(e.target.value)
+                            }
+                        } else {
+                            setTheHex(e.target.value)
+                        }
                     }
-                }
-                }
-                /></div>
-            </Grid.Column>
+                    }
+                    /></div>
+                    
+                </Grid.Row>
 
-            <Grid.Column>
-                <h4 style={{color:"blue"}}>B</h4> 
-                {/* {bValue} */}
-                {/* <br/> */}
-                <div class={inputWrapper} style={inputWrapperStyle}><input 
-                style={inputStyle}
-                type="text"
-                value = {bValue}
-                maxLength = "3"
-                onChange = {(e) => {
-                    if (e.target.value <= 255) {
-                        e.target.value = e.target.value.replace(/^0/, "")
-                        setHEX(rValue, gValue, e.target.value)
-                    } 
-                }
-                }
-                /></div>
-            </Grid.Column>
-        </Grid.Row>
-    </Grid>
-    </Grid>
+                {/* RGB part */}
+                <Grid.Row columns={5} centered style={{left:"10px"}} >
+
+                    <Grid.Column>
+                        <h4 style={{color:"red"}}>R</h4> 
+                        {/* {rValue} */}
+                        {/* <br/> */}
+                        <div class={inputWrapper} style={inputWrapperStyle}><input 
+                        style={inputStyle}
+                        type="text"
+                        value = {rValue}
+                        maxLength = "3"
+                        onChange = {(e) => {
+                            if (e.target.value <= 255) {
+                                e.target.value = e.target.value.replace(/^0/, "")
+                                setHEX(e.target.value, gValue, bValue)
+                            } 
+                        }
+                        
+                        }
+                        /></div>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <h4 style={{color:"green"} }>G</h4> 
+                        {/* {gValue} */}
+                        {/* <br/> */}
+                        <div class={inputWrapper} style={inputWrapperStyle}><input
+                        style={inputStyle}
+                        type="text"
+                        value = {gValue}
+                        maxLength = "3"
+                        onChange = {(e) => {
+                            if (e.target.value <= 255) {
+                                e.target.value = e.target.value.replace(/^0/, "")
+                                setHEX(rValue, e.target.value, bValue)
+                            }
+                        }
+                        }
+                        /></div>
+                    </Grid.Column>
+
+                    <Grid.Column>
+                        <h4 style={{color:"blue"}}>B</h4> 
+                        {/* {bValue} */}
+                        {/* <br/> */}
+                        <div class={inputWrapper} style={inputWrapperStyle}><input 
+                        style={inputStyle}
+                        type="text"
+                        value = {bValue}
+                        maxLength = "3"
+                        onChange = {(e) => {
+                            if (e.target.value <= 255) {
+                                e.target.value = e.target.value.replace(/^0/, "")
+                                setHEX(rValue, gValue, e.target.value)
+                            } 
+                        }
+                        }
+                        /></div>
+                    </Grid.Column>
+                </Grid.Row>
+            </Grid>
+
 
       </div>
       

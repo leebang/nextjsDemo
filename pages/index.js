@@ -20,46 +20,50 @@ var rgbToHex = function(r,g,b) {
 
 
 function HEX2RGB (hex) {
-    "use strict";
-    if (hex.charAt(0) === '#') {
-        hex = hex.substr(1);
-    }
-    if ((hex.length < 2) || (hex.length > 6)) {
-        return false;
-    }
-    var values = hex.split(''),
-        r,
-        g,
-        b;
+    const regexp = /^[0-9a-fA-F]+$/
 
-    if (hex.length === 2) {
-        r = parseInt(values[0].toString() + values[1].toString(), 16);
-        g = r;
-        b = r;
-    } else if (hex.length === 3) {
-        r = parseInt(values[0].toString() + values[0].toString(), 16);
-        g = parseInt(values[1].toString() + values[1].toString(), 16);
-        b = parseInt(values[2].toString() + values[2].toString(), 16);
-    } else if (hex.length === 6) {
-        r = parseInt(values[0].toString() + values[1].toString(), 16);
-        g = parseInt(values[2].toString() + values[3].toString(), 16);
-        b = parseInt(values[4].toString() + values[5].toString(), 16);
-    } else {
-        return false;
+    if (regexp.test(hex)) {
+        "use strict";
+        if (hex.charAt(0) === '#') {
+            hex = hex.substr(1);
+        }
+        if ((hex.length < 2) || (hex.length > 6)) {
+            return false;
+        }
+        var values = hex.split(''),
+            r,
+            g,
+            b;
+    
+        if (hex.length === 2) {
+            r = parseInt(values[0].toString() + values[1].toString(), 16);
+            g = r;
+            b = r;
+        } else if (hex.length === 3) {
+            r = parseInt(values[0].toString() + values[0].toString(), 16);
+            g = parseInt(values[1].toString() + values[1].toString(), 16);
+            b = parseInt(values[2].toString() + values[2].toString(), 16);
+        } else if (hex.length === 6) {
+            r = parseInt(values[0].toString() + values[1].toString(), 16);
+            g = parseInt(values[2].toString() + values[3].toString(), 16);
+            b = parseInt(values[4].toString() + values[5].toString(), 16);
+        } else {
+            return false;
+        }
+        return [r, g, b];
     }
-    return [r, g, b];
+
+
 }
 
 
 export default function Index() {
     const router = useRouter()
-    const [rValue, setRValue] = useState(0)
-    const [gValue, setGValue] = useState(0)
-    const [bValue, setBValue] = useState(0)
+    const [rValue, setRValue] = useState(255)
+    const [gValue, setGValue] = useState(255)
+    const [bValue, setBValue] = useState(255)
     const [theHex, setTheHex] = useState(() => {
-        router.query.hex ?
-        router.query.hex : 
-        "FFFFFF"
+        return "FFFFFF"
 
     })
     const [theColor, setTheColor] = useState()
@@ -74,6 +78,7 @@ export default function Index() {
 
     const inputStyle = {
         textAlign: "center !important",
+        pattern: "[a-fA-F\d]+"
     }
 
     const inputWrapper = "ui focus input transparent"
@@ -94,17 +99,22 @@ export default function Index() {
     }
 
     const setRGB = (str) => {
+
         const result = HEX2RGB(str)
+
         setRValue(result[0])
         setGValue(result[1])
         setBValue(result[2])
 
         setTheHex(str)
         setTheColor("#"+str)
+        
+
 
     }
 
     const setHEX = (r,g,b) => {
+        
         const result = rgbToHex(r,g,b)
 
         setRValue(r)
@@ -118,23 +128,31 @@ export default function Index() {
 
     useEffect(() => {
         if (router.query.hex) {
-            const result = HEX2RGB(router.query.hex)
-            setRValue(result[0])
-            setGValue(result[1])
-            setBValue(result[2])
-    
-            setTheHex(router.query.hex)
-            setTheColor("#" + router.query.hex)
+            if (router.query.hex.length === 6) {
+                const result = HEX2RGB(router.query.hex)
+                setRValue(result[0])
+                setGValue(result[1])
+                setBValue(result[2])
+        
+                setTheHex(router.query.hex)
+                setTheColor("#" + router.query.hex)
+            }
         } else if (router.query.rgb) {
-            const theRGB = (router.query.rgb).split(',')
-            setRValue(theRGB[0])
-            setGValue(theRGB[1])
-            setBValue(theRGB[2])
+            if (router.query.rgb.length <= 11) {
+                const theRGB = (router.query.rgb).split(',')
+                if (theRGB[0] <= 255 && theRGB[1] <= 255 && theRGB[2] <= 255) {
+                    setRValue(theRGB[0])
+                    setGValue(theRGB[1])
+                    setBValue(theRGB[2])
+        
+                    const result = rgbToHex(theRGB[0],theRGB[1],theRGB[2])
+                    
+                    setTheHex(result)
+                    setTheColor("#" + result)
+                }
 
-            const result = rgbToHex(theRGB[0],theRGB[1],theRGB[2])
-            
-            setTheHex("#" + result)
-            setTheColor("#" + result)
+            }
+
 
         } else {
             setRValue(rValue)

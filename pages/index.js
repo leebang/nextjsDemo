@@ -62,10 +62,7 @@ export default function Index() {
     const [rValue, setRValue] = useState(255)
     const [gValue, setGValue] = useState(255)
     const [bValue, setBValue] = useState(255)
-    const [theHex, setTheHex] = useState(() => {
-        return "FFFFFF"
-
-    })
+    const [theHex, setTheHex] = useState("FFFFFF")
     const [theColor, setTheColor] = useState()
 
 
@@ -101,10 +98,20 @@ export default function Index() {
     const setRGB = (str) => {
 
         const result = HEX2RGB(str)
+        if (result) {
+            if (result[0] !== "NaN") {
+                setRValue(result[0])
+            }
+            if (result[1] !== "NaN") {
+                setGValue(result[1])
+            }
+            if (result[2] !== "NaN") {
+                setBValue(result[2])
+            }
+        }
 
-        setRValue(result[0])
-        setGValue(result[1])
-        setBValue(result[2])
+        
+
 
         setTheHex(str)
         setTheColor("#"+str)
@@ -154,20 +161,13 @@ export default function Index() {
             }
 
 
-        } else {
-            setRValue(rValue)
-            setGValue(gValue)
-            setBValue(bValue)
-            setTheHex(theHex)
-            setTheColor("#" + theHex)
-        }
+        } 
         
 
 
     }, [router.query.hex, router.query.rgb])
 
     return (
-      
       <div style={theStyle}>
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
         <Grid rows={3} centered>
@@ -188,9 +188,13 @@ export default function Index() {
             value = {theHex}
             onChange = {(e) => {
                 if (e.target.value) {
-                    setRGB(e.target.value)
+                    if (e.target.value.length <= 6) {
+                        setRGB(e.target.value)
+                    } else {
+                        setTheHex(e.target.value)
+                    }
                 } else {
-                    setDefault()
+                    setTheHex(e.target.value)
                 }
             }
             }
@@ -201,7 +205,7 @@ export default function Index() {
         {/* RGB part */}
         <Grid.Row columns={5} centered style={{left:"10px"}} >
 
-            <Grid.Column centered>
+            <Grid.Column>
                 <h4 style={{color:"red"}}>R</h4> 
                 {/* {rValue} */}
                 {/* <br/> */}
@@ -212,19 +216,16 @@ export default function Index() {
                 maxLength = "3"
                 onChange = {(e) => {
                     if (e.target.value <= 255) {
+                        e.target.value = e.target.value.replace(/^0/, "")
                         setHEX(e.target.value, gValue, bValue)
-                    } else if (e.target.value > 255) {
-                        
-                    } else {
-                        setDefault()
-                    }
+                    } 
                 }
                 
                 }
                 /></div>
             </Grid.Column>
 
-            <Grid.Column centered>
+            <Grid.Column>
                 <h4 style={{color:"green"} }>G</h4> 
                 {/* {gValue} */}
                 {/* <br/> */}
@@ -235,18 +236,15 @@ export default function Index() {
                 maxLength = "3"
                 onChange = {(e) => {
                     if (e.target.value <= 255) {
+                        e.target.value = e.target.value.replace(/^0/, "")
                         setHEX(rValue, e.target.value, bValue)
-                    } else if (e.target.value > 255) {
-
-                    } else {
-                        setDefault()
                     }
                 }
                 }
                 /></div>
             </Grid.Column>
 
-            <Grid.Column centered>
+            <Grid.Column>
                 <h4 style={{color:"blue"}}>B</h4> 
                 {/* {bValue} */}
                 {/* <br/> */}
@@ -257,12 +255,9 @@ export default function Index() {
                 maxLength = "3"
                 onChange = {(e) => {
                     if (e.target.value <= 255) {
+                        e.target.value = e.target.value.replace(/^0/, "")
                         setHEX(rValue, gValue, e.target.value)
-                    } else if (e.target.value > 255) {
-                        
-                    } else {
-                        setDefault()
-                    }
+                    } 
                 }
                 }
                 /></div>

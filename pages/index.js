@@ -78,10 +78,11 @@ export default function Index() {
         pattern: "[a-fA-F\d]+"
     }
 
-    const inputWrapper = "ui focus input transparent"
-    const inputWrapperStyle = {width: "54.5px", right:"23px", textAlign: "center", lineHeight: "1em", background:"rgb(25,25,25,0.2)"}
-    const inputWrapperStyleHex = {width: "80px", textAlign: "center", lineHeight: "1em", background:"rgb(25,25,25,0.2)"}
-    const boxStyle = {background:"rgb(255,255,255,0.5)", width: "300px", boxShadow: "1px 3px 10px #111111", borderRadius: "5px", marginLeft: "auto", marginRight: "auto"}
+    const inputWrapper = "ui input transparent hex-selector"
+    const inputWrapperRGB = "ui input transparent rgb-selector"
+    const inputWrapperStyle = {width: "54.5px", right:"23px", textAlign: "center", lineHeight: "1em", background:"rgb(25,25,25,0.2)", borderRadius: "5px"}
+    const inputWrapperStyleHex = {width: "80px", textAlign: "center", lineHeight: "1em", borderRadius: "5px",   transition: "all 0.2s ease-in-out", boxShadow: "0 0 10px -3px black"}
+    const boxStyle = {background:"rgb(255,255,255,0.5)", width: "300px", boxShadow: "0 0 10px -3px black", borderRadius: "5px", marginLeft: "auto", marginRight: "auto"}
 
 
 
@@ -162,8 +163,40 @@ export default function Index() {
     }, [router.query.hex, router.query.rgb])
 
     return (
+        
+
       <div style={theStyle}>
+
         <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Titillium+Web:300,400,700" rel="stylesheet" />
+        <style jsx>
+        {`.hex-selector {
+            background: rgb(255, 255, 255, 0.5);
+            width: 80px;
+            text-align: center;
+            line-height: 1em;
+            border-radius: 5px;   
+            transition: all 0.2s ease-in-out; 
+          }
+          .hex-selector:hover {
+            box-shadow: 0 0 10px -3px black;
+            transition: all 0.2s ease-in-out;
+          }
+          .rgb-selector {
+            background: rgb(255, 255, 255, 0.5);
+            width: 54.5px;
+            right: 23px;
+            text-align: center;
+            line-height: 1em;
+            border-radius: 5px;   
+            transition: all 0.2s ease-in-out; 
+          }
+          .rgb-selector:hover {
+            box-shadow: 0 0 10px -3px black;
+            transition: all 0.2s ease-in-out;
+        }
+        `}
+        </style>
 
             
             <Grid.Row style={{height:"30vh"}}></Grid.Row>
@@ -174,8 +207,8 @@ export default function Index() {
                 </Grid.Row>
 
                 <Grid.Row columns={1}  width={8} centered>
-                    <h4>Hex</h4>
-                    <div class={inputWrapper} style={inputWrapperStyleHex}><input
+                    <h4>HEX</h4>
+                    <div className={inputWrapper} ><input
                     style={inputStyle}
                     type="text"
                     maxLength = "6"
@@ -203,7 +236,7 @@ export default function Index() {
                         <h4 style={{color:"red"}}>R</h4> 
                         {/* {rValue} */}
                         {/* <br/> */}
-                        <div class={inputWrapper} style={inputWrapperStyle}><input 
+                        <div className={inputWrapperRGB}><input 
                         style={inputStyle}
                         type="text"
                         value = {rValue}
@@ -223,7 +256,7 @@ export default function Index() {
                         <h4 style={{color:"green"} }>G</h4> 
                         {/* {gValue} */}
                         {/* <br/> */}
-                        <div class={inputWrapper} style={inputWrapperStyle}><input
+                        <div className={inputWrapperRGB}><input
                         style={inputStyle}
                         type="text"
                         value = {gValue}
@@ -242,7 +275,7 @@ export default function Index() {
                         <h4 style={{color:"blue"}}>B</h4> 
                         {/* {bValue} */}
                         {/* <br/> */}
-                        <div class={inputWrapper} style={inputWrapperStyle}><input 
+                        <div className={inputWrapperRGB}><input 
                         style={inputStyle}
                         type="text"
                         value = {bValue}
